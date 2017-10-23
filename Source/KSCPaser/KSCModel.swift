@@ -11,8 +11,8 @@ import Foundation
 
 struct KSCLineModel: LyricsLineModelProtocol {
     
-    var beginTime = ""
-    var endTime   = ""
+    var beginTime: TimeInterval = 0.0
+    var endTime: TimeInterval = 0.0
     var text      = ""
     var intervals = [Double]()
 

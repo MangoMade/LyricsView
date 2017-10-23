@@ -28,6 +28,17 @@ public class LyricsView: UIView {
         }
     }
     
+    public var time: TimeInterval = 60 {
+        didSet {
+            tableView.indexPathsForVisibleRows?.forEach({ (indexPath) in
+                if let lineModel = lyrics?.lines[indexPath.row],
+                    let cell = tableView.cellForRow(at: indexPath) as? LyricsTableViewCell {
+                    cell.lyricsLabel.currentTime = max(time - lineModel.beginTime, 0)
+                }
+            })
+        }
+    }
+    
     private let tableView = UITableView(frame: .zero, style: .plain)
     
     //MARK: Init / Deinit
@@ -89,9 +100,12 @@ extension LyricsView: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LyricsTableViewCell", for: indexPath) as! LyricsTableViewCell
-        cell.lyricsLabel.text = lyrics?.lines[indexPath.row].text ?? ""
+        let lineModel = lyrics!.lines[indexPath.row]
+        cell.lyricsLabel.text = lineModel.text
         cell.lyricsLabel.font = font
-    
+        cell.lyricsLabel.timeIntervals = lineModel.intervals
+        cell.lyricsLabel.currentTime = max(time - lineModel.beginTime, 0)
+        
         return cell
     }
     

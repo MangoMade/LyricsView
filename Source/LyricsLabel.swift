@@ -27,6 +27,8 @@ public class LyricsLabel: UIView {
         didSet {
             labels.forEach{ $0.text = text }
             invalidateIntrinsicContentSize()
+            setNeedsLayout()
+            widths = layerWidths()
         }
     }
     
@@ -34,12 +36,25 @@ public class LyricsLabel: UIView {
         didSet {
             labels.forEach{ $0.font = font }
             invalidateIntrinsicContentSize()
+            setNeedsLayout()
         }
     }
     
     public var textAlignment: NSTextAlignment = .center {
         didSet {
             labels.forEach{ $0.textAlignment = textAlignment}
+        }
+    }
+    
+    public var timeIntervals: [TimeInterval] = [] {
+        didSet {
+            updateLayerWidth()
+        }
+    }
+    
+    public var currentTime: TimeInterval = 0.0 {
+        didSet {
+            updateLayerWidth()
         }
     }
     
@@ -52,6 +67,12 @@ public class LyricsLabel: UIView {
     }
     
     private let sangLabelMask = CALayer()
+    
+    private var widths: [CGFloat] = [] {
+        didSet {
+            updateLayerWidth()
+        }
+    }
     
     // MARK: - Init / Deinit
     
@@ -86,39 +107,12 @@ public class LyricsLabel: UIView {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        sangLabelMask.bounds = CGRect(x: 0, y: 0, width: 0, height: bounds.height)
+        sangLabelMask.bounds.size.height = bounds.height
+        
         sangLabelMask.position = CGPoint(x: 0, y: bounds.height / 2)
         labels.forEach{ $0.frame = bounds }
-    }
-    
-    // MARK: - Public Methods
-    public func animate(intervals: [TimeInterval]) {
-
-        var duration = 0.0
-        var times = intervals.map { (time) -> TimeInterval in
-            let newTime = duration
-            duration += time
-            return newTime
-        }
-        times.append(duration)
-        
-        animate(timeOffsets: times)
-    }
-    
-    public func animate(timeOffsets: [TimeInterval]) {
-        
-        guard let duration = timeOffsets.last else { return }
-        
-        let animation = CAKeyframeAnimation(keyPath: "bounds.size.width")
-        let timeOffsetRatios = timeOffsets.map{ $0 / duration }
-        let widths = layerWidths()
-        animation.values = widths
-        animation.keyTimes = timeOffsetRatios as [NSNumber]
-        animation.duration = duration
-        animation.calculationMode = kCAAnimationLinear
-        animation.fillMode = kCAFillModeForwards
-        animation.isRemovedOnCompletion = false
-        sangLabelMask.add(animation, forKey: "kLyrcisAnimation")
+        widths = layerWidths()
+        updateLayerWidth()
     }
     
     private func layerWidths() -> [CGFloat] {
@@ -144,6 +138,71 @@ public class LyricsLabel: UIView {
             widths.append(rect.maxX)
         }
         return widths
+    }
+    
+    private func updateLayerWidth() {
+        var timeOffset = 0.0
+        var currentIndex = 0
+        var currentLetterTimeOffsetRatio = 0.0
+        for (index, timeInterval) in timeIntervals.enumerated() {
+            if currentTime > timeOffset && currentTime <= timeOffset + timeInterval {
+                currentIndex = index
+                currentLetterTimeOffsetRatio = (currentTime - timeOffset) / timeInterval
+                break
+            }
+            if index == timeIntervals.count - 1,
+                currentTime > timeOffset + timeInterval {
+                currentIndex = index
+                currentLetterTimeOffsetRatio = 1
+            }
+            timeOffset += timeInterval
+        }
+
+        var layerWidth: CGFloat = 0.0
+        if widths.count > currentIndex {
+            let letterOffset = widths[currentIndex]
+            var nextLetterOffset: CGFloat = 0.0
+            let nextIndex = currentIndex + 1
+            if widths.count > nextIndex {
+                nextLetterOffset = widths[nextIndex]
+            }
+            layerWidth = (nextLetterOffset - letterOffset) * CGFloat(currentLetterTimeOffsetRatio) + letterOffset
+        }
+        CATransaction.setDisableActions(true)
+        sangLabelMask.bounds.size.width = layerWidth
+    }
+}
+
+// MARK: - Public Methods
+extension LyricsLabel {
+    
+    public func animate(intervals: [TimeInterval]) {
+        
+        var duration = 0.0
+        var times = intervals.map { (time) -> TimeInterval in
+            let newTime = duration
+            duration += time
+            return newTime
+        }
+        times.append(duration)
+        
+        animate(timeOffsets: times)
+    }
+    
+    public func animate(timeOffsets: [TimeInterval]) {
+        
+        guard let duration = timeOffsets.last else { return }
+        
+        let animation = CAKeyframeAnimation(keyPath: "bounds.size.width")
+        let timeOffsetRatios = timeOffsets.map{ $0 / duration }
+        let widths = layerWidths()
+        animation.values = widths
+        animation.keyTimes = timeOffsetRatios as [NSNumber]
+        animation.duration = duration
+        animation.calculationMode = kCAAnimationLinear
+        animation.fillMode = kCAFillModeForwards
+        animation.isRemovedOnCompletion = false
+        sangLabelMask.add(animation, forKey: "kLyrcisAnimation")
     }
 }
 

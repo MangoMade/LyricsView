@@ -20,9 +20,9 @@ public class LyricsModel: LyricsModelProtocol {
 
 public protocol LyricsLineModelProtocol {
     
-    var beginTime: String { get }
-    var endTime: String   { get }
-    var text: String      { get }
-    var intervals: [Double] { get }
+    var beginTime: TimeInterval { get }
+    var endTime: TimeInterval   { get }
+    var text: String            { get }
+    var intervals: [Double]     { get }
     
 }

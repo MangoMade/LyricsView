@@ -10,6 +10,8 @@ import UIKit
 
 struct KSCGrammerPaser {
     
+    static let intervalFormatter = DateFormatter()
+    
     static func paserLine(_ string: String) -> KSCLineModel? {
         
         let pattern = "^karaoke.add\\('(.*)' *, *'(.*)' *, *'(.*)' *, *'(.*)'\\);$"
@@ -32,17 +34,28 @@ struct KSCGrammerPaser {
             let substring = (string as NSString).substring(with: aResult.range(at: index))
             switch index {
             case 1:
-                model.beginTime = substring
+                model.beginTime = stringToTimeInterval(substring)
             case 2:
-                model.endTime   = substring
+                model.endTime   = stringToTimeInterval(substring)
             case 3:
                 model.text      = substring
             case 4:
-                model.intervals = substring.split(separator: ",").flatMap { Double($0) }
+                model.intervals = substring.split(separator: ",").flatMap { (Double($0) ?? 0) / 1000 }
             default:
                 break
             }
         }
         return model
+    }
+    
+    private static func stringToTimeInterval(_ string: String) -> TimeInterval {
+        let substings = string.split(separator: ":")
+        if substings.count == 2 {
+            let min = TimeInterval(substings[0]) ?? 0
+            let sec = TimeInterval(substings[1]) ?? 0
+            return min * 60 + sec
+        } else {
+            return 0
+        }
     }
 }

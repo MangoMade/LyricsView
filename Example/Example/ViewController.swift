@@ -121,7 +121,7 @@ class ViewController: UIViewController {
         
         let model = KSCPaser(with: lrcContent).generateModel()
         lyricsView.lyrics = model
-        
+//        lyricsView.time = 60
 
     }
 
