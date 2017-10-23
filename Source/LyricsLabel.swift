@@ -9,15 +9,8 @@
 import UIKit
 
 public class LyricsLabel: UIView {
-    
-    private let backgroundLabel = UILabel()
-    private let sangLabel = UILabel()
-    private var labels: [UILabel] {
-        return [backgroundLabel, sangLabel]
-    }
-    
-    private let sangLabelMask = CALayer()
-    
+
+    // MARK: - Public Properties
     public var sangTextColor = UIColor.red {
         didSet {
             sangLabel.textColor = sangTextColor
@@ -43,10 +36,28 @@ public class LyricsLabel: UIView {
             invalidateIntrinsicContentSize()
         }
     }
-    //MARK: Init / Deinit
+    
+    public var textAlignment: NSTextAlignment = .center {
+        didSet {
+            labels.forEach{ $0.textAlignment = textAlignment}
+        }
+    }
+    
+    // MARK: - Private Properties
+    
+    private let backgroundLabel = UILabel()
+    private let sangLabel = UILabel()
+    private var labels: [UILabel] {
+        return [backgroundLabel, sangLabel]
+    }
+    
+    private let sangLabelMask = CALayer()
+    
+    // MARK: - Init / Deinit
     
     private func commonInit() {
         font = UIFont.systemFont(ofSize: 26)
+        textAlignment = .center
         
         labels.forEach { (label) in
             addSubview(label)
@@ -80,9 +91,9 @@ public class LyricsLabel: UIView {
         labels.forEach{ $0.frame = bounds }
     }
     
+    // MARK: - Public Methods
     public func animate(intervals: [TimeInterval]) {
 
-        let animation = CAKeyframeAnimation(keyPath: "bounds.size.width")
         var duration = 0.0
         var times = intervals.map { (time) -> TimeInterval in
             let newTime = duration
@@ -91,25 +102,48 @@ public class LyricsLabel: UIView {
         }
         times.append(duration)
         
-        var widths = [CGFloat]()
-        if intervals.count == text.utf16.count {
-            for index in 0...intervals.count {
-                let substring = text.substring(to: text.index(text.startIndex, offsetBy: index))
-                let size = substring.size(font: font)
-                widths.append(size.width)
-            }
-        } else {
-            
-        }
+        animate(timeOffsets: times)
+    }
+    
+    public func animate(timeOffsets: [TimeInterval]) {
         
-        let timeLocations = times.map{ $0 / duration }
+        guard let duration = timeOffsets.last else { return }
+        
+        let animation = CAKeyframeAnimation(keyPath: "bounds.size.width")
+        let timeOffsetRatios = timeOffsets.map{ $0 / duration }
+        let widths = layerWidths()
         animation.values = widths
-        animation.keyTimes = timeLocations as [NSNumber]
+        animation.keyTimes = timeOffsetRatios as [NSNumber]
         animation.duration = duration
         animation.calculationMode = kCAAnimationLinear
         animation.fillMode = kCAFillModeForwards
         animation.isRemovedOnCompletion = false
         sangLabelMask.add(animation, forKey: "kLyrcisAnimation")
+    }
+    
+    private func layerWidths() -> [CGFloat] {
+        
+        var widths = [CGFloat]()
+        for index in 0...text.utf16.count {
+            
+            let substring = text.substring(to: text.index(text.startIndex, offsetBy: index))
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = textAlignment
+            paragraphStyle.lineBreakMode = .byTruncatingTail
+            let attributes: [NSAttributedStringKey : Any] = [
+                NSAttributedStringKey.font: font,
+                NSAttributedStringKey.paragraphStyle: paragraphStyle as NSParagraphStyle
+                ]
+     
+            let boundingSize = CGSize(width: bounds.width, height: bounds.height)
+            let rect: CGRect = substring.boundingRect(with: boundingSize,
+                                                      options: .usesDeviceMetrics,
+                                                      attributes: attributes,
+                                                      context: nil)
+
+            widths.append(rect.maxX)
+        }
+        return widths
     }
 }
 

@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52DF765B1F9B8CFE004216A7 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765A1F9B8CFE004216A7 /* LyricsView.swift */; };
+		52DF76601F9B908E004216A7 /* LyricsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */; };
+		52DF76611F9B908E004216A7 /* KSCGrammerPaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765D1F9B908E004216A7 /* KSCGrammerPaser.swift */; };
+		52DF76621F9B908E004216A7 /* KSCPaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765E1F9B908E004216A7 /* KSCPaser.swift */; };
+		52DF76631F9B908E004216A7 /* KSCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765F1F9B908E004216A7 /* KSCModel.swift */; };
+		52DF76661F9B9EF6004216A7 /* LyricsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF76651F9B9EF6004216A7 /* LyricsTableViewCell.swift */; };
 		52E40ECB1F99EF25005DCD84 /* LyricsView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40EC11F99EF25005DCD84 /* LyricsView.framework */; };
 		52E40ED01F99EF25005DCD84 /* LyricsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E40ECF1F99EF25005DCD84 /* LyricsViewTests.swift */; };
 		52E40ED21F99EF25005DCD84 /* LyricsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 52E40EC41F99EF25005DCD84 /* LyricsView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52E40F001F99F26A005DCD84 /* LyricsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E40EFF1F99F26A005DCD84 /* LyricsLabel.swift */; };
-		52E40F021F9A016F005DCD84 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E40F011F9A016F005DCD84 /* String+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +30,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52DF765A1F9B8CFE004216A7 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
+		52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsProtocol.swift; sourceTree = "<group>"; };
+		52DF765D1F9B908E004216A7 /* KSCGrammerPaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSCGrammerPaser.swift; sourceTree = "<group>"; };
+		52DF765E1F9B908E004216A7 /* KSCPaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSCPaser.swift; sourceTree = "<group>"; };
+		52DF765F1F9B908E004216A7 /* KSCModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSCModel.swift; sourceTree = "<group>"; };
+		52DF76651F9B9EF6004216A7 /* LyricsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsTableViewCell.swift; sourceTree = "<group>"; };
 		52E40EC11F99EF25005DCD84 /* LyricsView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LyricsView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E40EC41F99EF25005DCD84 /* LyricsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsView.h; sourceTree = "<group>"; };
 		52E40EC51F99EF25005DCD84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -32,7 +43,6 @@
 		52E40ECF1F99EF25005DCD84 /* LyricsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsViewTests.swift; sourceTree = "<group>"; };
 		52E40ED11F99EF25005DCD84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52E40EFF1F99F26A005DCD84 /* LyricsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsLabel.swift; sourceTree = "<group>"; };
-		52E40F011F9A016F005DCD84 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +64,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52DF76641F9B9097004216A7 /* KSCPaser */ = {
+			isa = PBXGroup;
+			children = (
+				52DF765D1F9B908E004216A7 /* KSCGrammerPaser.swift */,
+				52DF765F1F9B908E004216A7 /* KSCModel.swift */,
+				52DF765E1F9B908E004216A7 /* KSCPaser.swift */,
+			);
+			path = KSCPaser;
+			sourceTree = "<group>";
+		};
 		52E40EB71F99EF25005DCD84 = {
 			isa = PBXGroup;
 			children = (
@@ -75,9 +95,12 @@
 		52E40EC31F99EF25005DCD84 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				52DF76641F9B9097004216A7 /* KSCPaser */,
 				52E40EFF1F99F26A005DCD84 /* LyricsLabel.swift */,
 				52E40EFE1F99F1FE005DCD84 /* Supporting Files */,
-				52E40F011F9A016F005DCD84 /* String+Extension.swift */,
+				52DF765A1F9B8CFE004216A7 /* LyricsView.swift */,
+				52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */,
+				52DF76651F9B9EF6004216A7 /* LyricsTableViewCell.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -211,8 +234,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52E40F021F9A016F005DCD84 /* String+Extension.swift in Sources */,
+				52DF76611F9B908E004216A7 /* KSCGrammerPaser.swift in Sources */,
+				52DF76621F9B908E004216A7 /* KSCPaser.swift in Sources */,
+				52DF76631F9B908E004216A7 /* KSCModel.swift in Sources */,
+				52DF765B1F9B8CFE004216A7 /* LyricsView.swift in Sources */,
+				52DF76661F9B9EF6004216A7 /* LyricsTableViewCell.swift in Sources */,
 				52E40F001F99F26A005DCD84 /* LyricsLabel.swift in Sources */,
+				52DF76601F9B908E004216A7 /* LyricsProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

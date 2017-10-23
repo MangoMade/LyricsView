@@ -13,6 +13,8 @@
 		52E40EEF1F99EF5A005DCD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E40EEE1F99EF5A005DCD84 /* Assets.xcassets */; };
 		52E40EF21F99EF5A005DCD84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40EF01F99EF5A005DCD84 /* LaunchScreen.storyboard */; };
 		52E40EFA1F99F023005DCD84 /* LyricsView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40EFB1F99F023005DCD84 /* LyricsView.framework */; };
+		52E91C881F9D8E7800EC1D49 /* test2.ksc in Resources */ = {isa = PBXBuildFile; fileRef = 52E91C861F9D8E7800EC1D49 /* test2.ksc */; };
+		52E91C891F9D8E7800EC1D49 /* test.ksc in Resources */ = {isa = PBXBuildFile; fileRef = 52E91C871F9D8E7800EC1D49 /* test.ksc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		52E40EF11F99EF5A005DCD84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52E40EF31F99EF5A005DCD84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52E40EFB1F99F023005DCD84 /* LyricsView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LyricsView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		52E91C861F9D8E7800EC1D49 /* test2.ksc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test2.ksc; sourceTree = "<group>"; };
+		52E91C871F9D8E7800EC1D49 /* test.ksc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.ksc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 			children = (
 				52E40EE71F99EF5A005DCD84 /* AppDelegate.swift */,
 				52E40EE91F99EF5A005DCD84 /* ViewController.swift */,
+				52E91C871F9D8E7800EC1D49 /* test.ksc */,
+				52E91C861F9D8E7800EC1D49 /* test2.ksc */,
 				52E40EEB1F99EF5A005DCD84 /* Main.storyboard */,
 				52E40EEE1F99EF5A005DCD84 /* Assets.xcassets */,
 				52E40EF01F99EF5A005DCD84 /* LaunchScreen.storyboard */,
@@ -137,6 +143,8 @@
 			files = (
 				52E40EF21F99EF5A005DCD84 /* LaunchScreen.storyboard in Resources */,
 				52E40EEF1F99EF5A005DCD84 /* Assets.xcassets in Resources */,
+				52E91C881F9D8E7800EC1D49 /* test2.ksc in Resources */,
+				52E91C891F9D8E7800EC1D49 /* test.ksc in Resources */,
 				52E40EED1F99EF5A005DCD84 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
