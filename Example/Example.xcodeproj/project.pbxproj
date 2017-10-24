@@ -7,17 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52B581751F9DEF81001A2B57 /* BeautifulLove.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52B581731F9DEF81001A2B57 /* BeautifulLove.mp3 */; };
+		52B5817E1F9DF2D5001A2B57 /* LyricsView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40EFB1F99F023005DCD84 /* LyricsView.framework */; };
+		52B5817F1F9DF2D5001A2B57 /* LyricsView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40EFB1F99F023005DCD84 /* LyricsView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		52B581821F9DF552001A2B57 /* 丁香花.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52B581811F9DF552001A2B57 /* 丁香花.mp3 */; };
+		52B581881F9DF77B001A2B57 /* BeautifulLove.ksc in Resources */ = {isa = PBXBuildFile; fileRef = 52B581871F9DF77B001A2B57 /* BeautifulLove.ksc */; };
 		52E40EE81F99EF5A005DCD84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E40EE71F99EF5A005DCD84 /* AppDelegate.swift */; };
 		52E40EEA1F99EF5A005DCD84 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E40EE91F99EF5A005DCD84 /* ViewController.swift */; };
 		52E40EED1F99EF5A005DCD84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40EEB1F99EF5A005DCD84 /* Main.storyboard */; };
 		52E40EEF1F99EF5A005DCD84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E40EEE1F99EF5A005DCD84 /* Assets.xcassets */; };
 		52E40EF21F99EF5A005DCD84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40EF01F99EF5A005DCD84 /* LaunchScreen.storyboard */; };
-		52E40EFA1F99F023005DCD84 /* LyricsView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40EFB1F99F023005DCD84 /* LyricsView.framework */; };
 		52E91C881F9D8E7800EC1D49 /* test2.ksc in Resources */ = {isa = PBXBuildFile; fileRef = 52E91C861F9D8E7800EC1D49 /* test2.ksc */; };
 		52E91C891F9D8E7800EC1D49 /* test.ksc in Resources */ = {isa = PBXBuildFile; fileRef = 52E91C871F9D8E7800EC1D49 /* test.ksc */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		52B581801F9DF2D5001A2B57 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				52B5817F1F9DF2D5001A2B57 /* LyricsView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		52B581731F9DEF81001A2B57 /* BeautifulLove.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BeautifulLove.mp3; sourceTree = "<group>"; };
+		52B581811F9DF552001A2B57 /* 丁香花.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "丁香花.mp3"; sourceTree = "<group>"; };
+		52B581871F9DF77B001A2B57 /* BeautifulLove.ksc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BeautifulLove.ksc; sourceTree = "<group>"; };
 		52E40EE41F99EF5A005DCD84 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E40EE71F99EF5A005DCD84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E40EE91F99EF5A005DCD84 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52E40EFA1F99F023005DCD84 /* LyricsView.framework in Frameworks */,
+				52B5817E1F9DF2D5001A2B57 /* LyricsView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +87,9 @@
 				52E40EE91F99EF5A005DCD84 /* ViewController.swift */,
 				52E91C871F9D8E7800EC1D49 /* test.ksc */,
 				52E91C861F9D8E7800EC1D49 /* test2.ksc */,
+				52B581731F9DEF81001A2B57 /* BeautifulLove.mp3 */,
+				52B581871F9DF77B001A2B57 /* BeautifulLove.ksc */,
+				52B581811F9DF552001A2B57 /* 丁香花.mp3 */,
 				52E40EEB1F99EF5A005DCD84 /* Main.storyboard */,
 				52E40EEE1F99EF5A005DCD84 /* Assets.xcassets */,
 				52E40EF01F99EF5A005DCD84 /* LaunchScreen.storyboard */,
@@ -92,6 +116,7 @@
 				52E40EE01F99EF5A005DCD84 /* Sources */,
 				52E40EE11F99EF5A005DCD84 /* Frameworks */,
 				52E40EE21F99EF5A005DCD84 /* Resources */,
+				52B581801F9DF2D5001A2B57 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -141,9 +166,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B581821F9DF552001A2B57 /* 丁香花.mp3 in Resources */,
 				52E40EF21F99EF5A005DCD84 /* LaunchScreen.storyboard in Resources */,
 				52E40EEF1F99EF5A005DCD84 /* Assets.xcassets in Resources */,
 				52E91C881F9D8E7800EC1D49 /* test2.ksc in Resources */,
+				52B581751F9DEF81001A2B57 /* BeautifulLove.mp3 in Resources */,
+				52B581881F9DF77B001A2B57 /* BeautifulLove.ksc in Resources */,
 				52E91C891F9D8E7800EC1D49 /* test.ksc in Resources */,
 				52E40EED1F99EF5A005DCD84 /* Main.storyboard in Resources */,
 			);

@@ -77,7 +77,7 @@ public class LyricsLabel: UIView {
     // MARK: - Init / Deinit
     
     private func commonInit() {
-        font = UIFont.systemFont(ofSize: 26)
+        font = UIFont.systemFont(ofSize: 40)
         textAlignment = .center
         
         labels.forEach { (label) in
@@ -118,25 +118,44 @@ public class LyricsLabel: UIView {
     private func layerWidths() -> [CGFloat] {
         
         var widths = [CGFloat]()
-        for index in 0...text.utf16.count {
-            
-            let substring = text.substring(to: text.index(text.startIndex, offsetBy: index))
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = textAlignment
-            paragraphStyle.lineBreakMode = .byTruncatingTail
-            let attributes: [NSAttributedStringKey : Any] = [
-                NSAttributedStringKey.font: font,
-                NSAttributedStringKey.paragraphStyle: paragraphStyle as NSParagraphStyle
-                ]
-     
-            let boundingSize = CGSize(width: bounds.width, height: bounds.height)
-            let rect: CGRect = substring.boundingRect(with: boundingSize,
-                                                      options: .usesDeviceMetrics,
-                                                      attributes: attributes,
-                                                      context: nil)
-
-            widths.append(rect.maxX)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = textAlignment
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        let attributes: [NSAttributedStringKey : Any] = [
+            NSAttributedStringKey.font: font,
+            NSAttributedStringKey.paragraphStyle: paragraphStyle as NSParagraphStyle,
+            ]
+        
+        let boundingSize = CGSize(width: bounds.width, height: bounds.height)
+        
+        func boundingRect(text: String) -> CGRect {
+            return text.boundingRect(with: boundingSize,
+                                     options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin, .usesDeviceMetrics],
+                                     attributes: attributes,
+                                     context: nil)
         }
+        
+        let maxRect: CGRect = boundingRect(text: text)
+        
+        for index in 0..<text.utf16.count {
+            
+            let textIndex = text.index(text.startIndex, offsetBy: index)
+            
+            let frontSubstring = text.substring(to: textIndex)
+     
+            let frontRect: CGRect = boundingRect(text: frontSubstring)
+            
+            let backSubstring = text.substring(from: textIndex)
+            
+            let backRect: CGRect = boundingRect(text: backSubstring)
+            
+            let width = frontRect.width + (maxRect.width - frontRect.width - backRect.width) / 2
+            widths.append(width)
+        }
+        widths = widths.map{ $0 + maxRect.origin.x }
+        widths.append(maxRect.maxX)
+        
         return widths
     }
     
@@ -145,11 +164,13 @@ public class LyricsLabel: UIView {
         var currentIndex = 0
         var currentLetterTimeOffsetRatio = 0.0
         for (index, timeInterval) in timeIntervals.enumerated() {
+            
             if currentTime > timeOffset && currentTime <= timeOffset + timeInterval {
                 currentIndex = index
                 currentLetterTimeOffsetRatio = (currentTime - timeOffset) / timeInterval
                 break
             }
+            // TODO: 优化一下这里，预先算出duration
             if index == timeIntervals.count - 1,
                 currentTime > timeOffset + timeInterval {
                 currentIndex = index
@@ -159,6 +180,7 @@ public class LyricsLabel: UIView {
         }
 
         var layerWidth: CGFloat = 0.0
+        // TODO: 优化一下这里的逻辑 有点乱
         if widths.count > currentIndex {
             let letterOffset = widths[currentIndex]
             var nextLetterOffset: CGFloat = 0.0
@@ -170,7 +192,12 @@ public class LyricsLabel: UIView {
         }
         CATransaction.setDisableActions(true)
         sangLabelMask.bounds.size.width = layerWidth
+        if shouldPrint {
+            print(layerWidth)
+        }
     }
+    
+    var shouldPrint = true
 }
 
 // MARK: - Public Methods

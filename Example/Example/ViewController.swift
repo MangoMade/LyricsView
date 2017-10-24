@@ -8,18 +8,23 @@
 
 import UIKit
 import LyricsView
+import AVFoundation
 
 class ViewController: UIViewController {
 
-    let label = LyricsLabel()
+    private let label = LyricsLabel()
     
-    let lyricsView = LyricsView()
+    private let lyricsView = LyricsView()
+    private var player: AVAudioPlayer?
+    private var updateLink: CADisplayLink?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
-        label.text = "1231中文中文"
+        
+        label.text = "1212中文中文"
+        label.timeIntervals = [1, 1, 1, 1, 1, 1, 1, 1, ]
+        label.currentTime = 6.5
         label.translatesAutoresizingMaskIntoConstraints = false
         label.sangTextColor = UIColor.blue
         label.backgroundTextColor = UIColor.lightGray
@@ -49,7 +54,7 @@ class ViewController: UIViewController {
                            toItem: nil,
                            attribute: .notAnAttribute,
                            multiplier: 1,
-                           constant: 100).isActive = true
+                           constant: 375).isActive = true
         
         NSLayoutConstraint(item: label,
                            attribute: .height,
@@ -59,7 +64,7 @@ class ViewController: UIViewController {
                            multiplier: 1,
                            constant: 100).isActive = true
 
-        
+        /*
         let button = UIButton(type: .system)
         button.setTitle("start", for: .normal)
         button.addTarget(self, action: #selector(startAnimation), for: .touchUpInside)
@@ -80,7 +85,7 @@ class ViewController: UIViewController {
                            attribute: .centerY,
                            multiplier: 1,
                            constant: 100).isActive = true
-         */
+ 
         lyricsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(lyricsView)
         NSLayoutConstraint(item: lyricsView,
@@ -115,14 +120,35 @@ class ViewController: UIViewController {
                            multiplier: 1,
                            constant: 300).isActive = true
         
-        let fileName = "test2.ksc"
+        let fileName = "BeautifulLove.ksc"
         guard let lrcFilePath = Bundle.main.path(forResource: fileName, ofType: nil)  else { return }
-        let lrcContent = try! String(contentsOfFile: lrcFilePath, encoding: .utf8)
-        
+        let lrcContent = try! String(contentsOfFile: lrcFilePath, encoding: .unicode)
         let model = KSCPaser(with: lrcContent).generateModel()
         lyricsView.lyrics = model
-//        lyricsView.time = 60
-
+ */
+        
+//        guard let musicPath = Bundle.main.url(forResource: "BeautifulLove.mp3" , withExtension: nil)  else { return }
+//
+//        do {
+//            try player = AVAudioPlayer(contentsOf: musicPath)
+//        } catch {
+//            print("创建音频播放器失败:\(error)")
+//        }
+//
+//        updateLink = CADisplayLink(target: self, selector: #selector(update))
+//        updateLink?.isPaused = true
+//        updateLink?.add(to: RunLoop.current, forMode: .commonModes)
+//        updateLink?.isPaused = false
+//        player?.prepareToPlay()
+//        player?.currentTime = 20
+//        player?.play()
+        
+//        lyricsView.time = 30.9
+    }
+    
+    @objc func update() {
+//        lyricsView.time = player?.currentTime ?? 0
+//        print(lyricsView.time)
     }
 
     @objc func startAnimation() {

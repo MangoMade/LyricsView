@@ -28,7 +28,7 @@ public class LyricsView: UIView {
         }
     }
     
-    public var time: TimeInterval = 60 {
+    public var time: TimeInterval = 0 {
         didSet {
             tableView.indexPathsForVisibleRows?.forEach({ (indexPath) in
                 if let lineModel = lyrics?.lines[indexPath.row],
@@ -105,7 +105,7 @@ extension LyricsView: UITableViewDataSource {
         cell.lyricsLabel.font = font
         cell.lyricsLabel.timeIntervals = lineModel.intervals
         cell.lyricsLabel.currentTime = max(time - lineModel.beginTime, 0)
-        
+        cell.lyricsLabel.shouldPrint = indexPath.row == 2
         return cell
     }
     
