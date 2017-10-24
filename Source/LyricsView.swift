@@ -30,12 +30,17 @@ public class LyricsView: UIView {
     
     public var time: TimeInterval = 0 {
         didSet {
-            tableView.indexPathsForVisibleRows?.forEach({ (indexPath) in
-                if let lineModel = lyrics?.lines[indexPath.row],
-                    let cell = tableView.cellForRow(at: indexPath) as? LyricsTableViewCell {
-                    cell.lyricsLabel.currentTime = max(time, 0)
-                }
-            })
+            updateProgress()
+        }
+    }
+    
+    private var currentLineIndex = -1 {
+        willSet {
+            if !tableView.isDragging && !tableView.isTracking {
+                /// if currentLineIndex < 0, dont animate.
+                let animated = currentLineIndex >= 0
+                tableView.scrollToRow(at: IndexPath(row: newValue, section: 0), at: .middle, animated: animated)
+            }
         }
     }
     
@@ -44,6 +49,7 @@ public class LyricsView: UIView {
     //MARK: Init / Deinit
     
     private func commonInit() {
+        
         backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -76,11 +82,6 @@ public class LyricsView: UIView {
         
     }
     
-    public override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        tableView.separatorStyle  = .none
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -89,6 +90,66 @@ public class LyricsView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        tableView.contentInset = UIEdgeInsets(top: (bounds.height - lineHeight) / 2, left: 0, bottom: (bounds.height - lineHeight) / 2, right: 0)
+    }
+    
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        tableView.separatorStyle  = .none
+    }
+}
+
+/// MARK: Private Methods
+extension LyricsView {
+    
+    fileprivate func updateProgress() {
+        
+        guard let lyrics = self.lyrics else { return }
+        
+        func isCurrentLine(lineIndex: Int) -> Bool {
+            let lastLineIndex = lineIndex + 1
+            let isLastLine = lyrics.lines.count == lastLineIndex
+            let line = lyrics.lines[lineIndex]
+            if isLastLine && time > line.beginTime {
+                return true
+            } else if time > line.beginTime && lyrics.lines[lastLineIndex].beginTime >= time {
+                return true
+            }
+            return false
+        }
+        
+        /// find out index of current line
+        var lineIndex = 0
+        if currentLineIndex >= 0 && isCurrentLine(lineIndex: currentLineIndex) {
+            lineIndex = currentLineIndex
+        } else {
+            /// if current time is not in current line
+            for index in 0..<lyrics.lines.count {
+                if isCurrentLine(lineIndex: index) {
+                    lineIndex = index
+                    break
+                }
+            }
+        }
+        
+        /// update cell's time
+        if lineIndex != self.currentLineIndex {
+            currentLineIndex = lineIndex
+            tableView.indexPathsForVisibleRows?.forEach({ (indexPath) in
+                if let cell = tableView.cellForRow(at: indexPath) as? LyricsTableViewCell {
+                    cell.lyricsLabel.currentTime = max(time, 0)
+                }
+            })
+        } else {
+            let currentLineIndexPath = IndexPath(row: currentLineIndex, section: 0)
+            if let cell = tableView.cellForRow(at: currentLineIndexPath) as? LyricsTableViewCell {
+                cell.lyricsLabel.currentTime = max(time, 0)
+            }
+        }
     }
 }
 

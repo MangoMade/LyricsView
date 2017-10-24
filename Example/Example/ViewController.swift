@@ -127,6 +127,8 @@ class ViewController: UIViewController {
         let lrcContent = try! String(contentsOfFile: lrcFilePath, encoding: .unicode)
         let model = KSCPaser(with: lrcContent).generateModel()
         lyricsView.lyrics = model
+        lyricsView.layer.borderColor = UIColor.black.cgColor
+        lyricsView.layer.borderWidth = 1
         
         guard let musicPath = Bundle.main.url(forResource: "BeautifulLove.mp3" , withExtension: nil)  else { return }
 
