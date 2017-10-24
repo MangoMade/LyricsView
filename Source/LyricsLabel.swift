@@ -64,7 +64,12 @@ public class LyricsLabel: UIView {
         }
     }
     
-    internal var isCurrentLine = false
+    internal var isCurrentLine = false {
+        didSet {
+            widths = layerWidths()
+            updateLayerWidth()
+        }
+    }
     
     // MARK: - Private Properties
     
@@ -171,12 +176,9 @@ public class LyricsLabel: UIView {
     private func updateLayerWidth() {
         
         guard isCurrentLine, let line = self.line else {
+            // if this view is not current playing line
             sangLabelMask.bounds.size.width = 0
             return
-        }
-        
-        if isCurrentLine && widths.count != line.characters.count + 1 {
-            widths = layerWidths()
         }
         
         var layerWidth: CGFloat = 0.0

@@ -47,6 +47,8 @@ public class LyricsView: UIView {
     
     public var currentLineFont: UIFont = UIFont.systemFont(ofSize: 16)
     
+    public var currentLineBackgroundTextColor: UIColor = UIColor.black
+    
     public var time: TimeInterval = 0 {
         didSet {
             updateProgress()
@@ -85,13 +87,15 @@ public class LyricsView: UIView {
             /// change the previous current line's font to normal font
             let currentLineIndexPath = IndexPath(row: currentLineIndex, section: 0)
             if let cell = tableView.cellForRow(at: currentLineIndexPath) as? LyricsTableViewCell {
-                cell.lyricsLabel.isCurrentLine = false
+                cell.lyricsLabel.backgroundTextColor = backgroundTextColor
                 cell.lyricsLabel.font = font
+                cell.lyricsLabel.isCurrentLine = false
             }
             /// change the current line's font
             if let cell = tableView.cellForRow(at: newCurrentLineIndexPath) as? LyricsTableViewCell {
-                cell.lyricsLabel.isCurrentLine = true
+                cell.lyricsLabel.backgroundTextColor = currentLineBackgroundTextColor
                 cell.lyricsLabel.font = currentLineFont
+                cell.lyricsLabel.isCurrentLine = true
             }
         }
     }
@@ -211,16 +215,10 @@ extension LyricsView {
         /// update cell's time
         if lineIndex != self.currentLineIndex {
             currentLineIndex = lineIndex
-            tableView.indexPathsForVisibleRows?.forEach({ (indexPath) in
-                if let cell = tableView.cellForRow(at: indexPath) as? LyricsTableViewCell {
-                    cell.lyricsLabel.currentTime = max(time, 0)
-                }
-            })
-        } else {
-            let currentLineIndexPath = IndexPath(row: currentLineIndex, section: 0)
-            if let cell = tableView.cellForRow(at: currentLineIndexPath) as? LyricsTableViewCell {
-                cell.lyricsLabel.currentTime = max(time, 0)
-            }
+        }
+        let currentLineIndexPath = IndexPath(row: currentLineIndex, section: 0)
+        if let cell = tableView.cellForRow(at: currentLineIndexPath) as? LyricsTableViewCell {
+            cell.lyricsLabel.currentTime = max(time, 0)
         }
     }
 }
@@ -234,12 +232,15 @@ extension LyricsView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LyricsTableViewCell", for: indexPath) as! LyricsTableViewCell
         let lineModel = lyrics!.lines[indexPath.row]
-        cell.lyricsLabel.font = indexPath.row == currentLineIndex ? currentLineFont : font
-        cell.lyricsLabel.isCurrentLine = indexPath.row == currentLineIndex
+        let isCurrentLine = indexPath.row == currentLineIndex
+        cell.lyricsLabel.font = isCurrentLine ? currentLineFont : font
+        
         cell.lyricsLabel.line = lineModel
         cell.lyricsLabel.currentTime = max(time, 0)
         cell.lyricsLabel.sangTextColor = sangTextColor
-        cell.lyricsLabel.backgroundTextColor = backgroundTextColor
+        cell.lyricsLabel.backgroundTextColor = isCurrentLine ? currentLineBackgroundTextColor : backgroundTextColor
+        
+        cell.lyricsLabel.isCurrentLine = isCurrentLine
         return cell
     }
     
