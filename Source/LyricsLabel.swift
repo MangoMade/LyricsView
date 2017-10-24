@@ -55,7 +55,6 @@ public class LyricsLabel: UIView {
             timeIntervals = line?.intervals ?? []
             invalidateIntrinsicContentSize()
             setNeedsLayout()
-            widths = layerWidths()
         }
     }
     
@@ -65,6 +64,8 @@ public class LyricsLabel: UIView {
         }
     }
     
+    internal var isCurrentLine = false
+    
     // MARK: - Private Properties
     
     private let backgroundLabel = UILabel()
@@ -73,13 +74,9 @@ public class LyricsLabel: UIView {
         return [backgroundLabel, sangLabel]
     }
     
-    private let sangLabelMask = CALayer()
+    fileprivate let sangLabelMask = CALayer()
     
-    private var widths: [CGFloat] = [] {
-        didSet {
-            updateLayerWidth()
-        }
-    }
+    private var widths: [CGFloat] = []
     
     private var duration: TimeInterval = 0
     
@@ -120,13 +117,12 @@ public class LyricsLabel: UIView {
         
         sangLabelMask.position = CGPoint(x: 0, y: bounds.height / 2)
         labels.forEach{ $0.frame = bounds }
-        widths = layerWidths()
-        updateLayerWidth()
     }
     
-    private func layerWidths() -> [CGFloat] {
+    fileprivate func layerWidths() -> [CGFloat] {
         
-        guard let line = self.line else { return [] }
+        /// only calculate widths when cell is current line
+        guard isCurrentLine, let line = self.line else { return [] }
         var widths = [CGFloat]()
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -174,9 +170,13 @@ public class LyricsLabel: UIView {
     
     private func updateLayerWidth() {
         
-        guard let line = self.line else {
+        guard isCurrentLine, let line = self.line else {
             sangLabelMask.bounds.size.width = 0
             return
+        }
+        
+        if isCurrentLine && widths.count != line.characters.count + 1 {
+            widths = layerWidths()
         }
         
         var layerWidth: CGFloat = 0.0
@@ -184,7 +184,7 @@ public class LyricsLabel: UIView {
         var currentLetterTimeOffsetRatio = 0.0
         
         if currentTime <= line.beginTime {
-            
+            /// do nothing
         } else if currentTime > line.beginTime + duration {
             currentIndex = timeIntervals.count - 1
             currentLetterTimeOffsetRatio = 1
@@ -204,7 +204,6 @@ public class LyricsLabel: UIView {
             }
         }
 
-        // TODO: 优化一下这里的逻辑 有点乱
         if widths.count > currentIndex {
             let letterOffset = widths[currentIndex]
             var nextLetterOffset: CGFloat = 0.0
@@ -252,5 +251,3 @@ extension LyricsLabel {
         sangLabelMask.add(animation, forKey: "kLyrcisAnimation")
     }
 }
-
-

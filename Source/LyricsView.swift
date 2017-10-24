@@ -61,7 +61,19 @@ public class LyricsView: UIView {
     
     public var displayUpdated: ((LyricsView) -> Void)?
     
-    private var currentLineIndex = -1 {
+    public var sangTextColor = UIColor.red {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    public var backgroundTextColor = UIColor.black {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    fileprivate var currentLineIndex = -1 {
         willSet {
             
             let newCurrentLineIndexPath = IndexPath(row: newValue, section: 0)
@@ -73,16 +85,18 @@ public class LyricsView: UIView {
             /// change the previous current line's font to normal font
             let currentLineIndexPath = IndexPath(row: currentLineIndex, section: 0)
             if let cell = tableView.cellForRow(at: currentLineIndexPath) as? LyricsTableViewCell {
+                cell.lyricsLabel.isCurrentLine = false
                 cell.lyricsLabel.font = font
             }
             /// change the current line's font
             if let cell = tableView.cellForRow(at: newCurrentLineIndexPath) as? LyricsTableViewCell {
+                cell.lyricsLabel.isCurrentLine = true
                 cell.lyricsLabel.font = currentLineFont
             }
         }
     }
     
-    private let tableView = UITableView(frame: .zero, style: .plain)
+    fileprivate let tableView = UITableView(frame: .zero, style: .plain)
     
     private var displayLink: CADisplayLink?
     
@@ -221,8 +235,11 @@ extension LyricsView: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LyricsTableViewCell", for: indexPath) as! LyricsTableViewCell
         let lineModel = lyrics!.lines[indexPath.row]
         cell.lyricsLabel.font = indexPath.row == currentLineIndex ? currentLineFont : font
+        cell.lyricsLabel.isCurrentLine = indexPath.row == currentLineIndex
         cell.lyricsLabel.line = lineModel
         cell.lyricsLabel.currentTime = max(time, 0)
+        cell.lyricsLabel.sangTextColor = sangTextColor
+        cell.lyricsLabel.backgroundTextColor = backgroundTextColor
         return cell
     }
     
