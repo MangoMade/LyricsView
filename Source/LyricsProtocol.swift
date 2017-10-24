@@ -24,5 +24,7 @@ public protocol LyricsLineModelProtocol {
     var endTime: TimeInterval   { get }
     var text: String            { get }
     var intervals: [Double]     { get }
-    
+    var characters: [String]    { get }
 }
+
+

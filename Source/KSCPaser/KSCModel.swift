@@ -9,11 +9,17 @@
 import Foundation
 
 
-struct KSCLineModel: LyricsLineModelProtocol {
+public struct KSCLineModel: LyricsLineModelProtocol {
     
-    var beginTime: TimeInterval = 0.0
-    var endTime: TimeInterval = 0.0
-    var text      = ""
-    var intervals = [Double]()
-
+    public var beginTime: TimeInterval = 0.0
+    public var endTime: TimeInterval = 0.0
+    public var characters = [String]() {
+        didSet {
+            text = characters.reduce("", +)
+        }
+    }
+    public var intervals = [Double]()
+    public var text = ""
+    
+    public init() { }
 }

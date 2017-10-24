@@ -20,7 +20,7 @@ public class KSCPaser {
         let lineContents = content.components(separatedBy: "\n")
         let models = LyricsModel()
         for line in lineContents {
-            if let lineModel = KSCGrammerPaser.paserLine(line) {
+            if let lineModel = KSCGrammerPaser.paser(line: line) {
                 models.lines.append(lineModel)
             }
         }

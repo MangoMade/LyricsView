@@ -23,15 +23,6 @@ public class LyricsLabel: UIView {
         }
     }
     
-    public var text: String = "" {
-        didSet {
-            labels.forEach{ $0.text = text }
-            invalidateIntrinsicContentSize()
-            setNeedsLayout()
-            widths = layerWidths()
-        }
-    }
-    
     public var font: UIFont = UIFont.systemFont(ofSize: 16) {
         didSet {
             labels.forEach{ $0.font = font }
@@ -48,7 +39,23 @@ public class LyricsLabel: UIView {
     
     public var timeIntervals: [TimeInterval] = [] {
         didSet {
-            updateLayerWidth()
+            duration = timeIntervals.reduce(0, +)
+        }
+    }
+    
+    public var text: String = "" {
+        didSet {
+            labels.forEach{ $0.text = text }
+        }
+    }
+    
+    public var line: LyricsLineModelProtocol? {
+        didSet {
+            text = line?.text ?? ""
+            timeIntervals = line?.intervals ?? []
+            invalidateIntrinsicContentSize()
+            setNeedsLayout()
+            widths = layerWidths()
         }
     }
     
@@ -73,6 +80,8 @@ public class LyricsLabel: UIView {
             updateLayerWidth()
         }
     }
+    
+    private var duration: TimeInterval = 0
     
     // MARK: - Init / Deinit
     
@@ -117,6 +126,7 @@ public class LyricsLabel: UIView {
     
     private func layerWidths() -> [CGFloat] {
         
+        guard let line = self.line else { return [] }
         var widths = [CGFloat]()
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -138,9 +148,12 @@ public class LyricsLabel: UIView {
         
         let maxRect: CGRect = boundingRect(text: text)
         
-        for index in 0..<text.utf16.count {
+        var textOffset = 0
+        widths.append(0)
+        for index in 0..<line.characters.count {
             
-            let textIndex = text.index(text.startIndex, offsetBy: index)
+            textOffset += line.characters[index].utf16.count
+            let textIndex = text.index(text.startIndex, offsetBy: textOffset)
             
             let frontSubstring = text.substring(to: textIndex)
      
@@ -160,26 +173,37 @@ public class LyricsLabel: UIView {
     }
     
     private func updateLayerWidth() {
-        var timeOffset = 0.0
+        
+        guard let line = self.line else {
+            sangLabelMask.bounds.size.width = 0
+            return
+        }
+        
+        var layerWidth: CGFloat = 0.0
         var currentIndex = 0
         var currentLetterTimeOffsetRatio = 0.0
-        for (index, timeInterval) in timeIntervals.enumerated() {
+        
+        if currentTime <= line.beginTime {
             
-            if currentTime > timeOffset && currentTime <= timeOffset + timeInterval {
-                currentIndex = index
-                currentLetterTimeOffsetRatio = (currentTime - timeOffset) / timeInterval
-                break
+        } else if currentTime > line.beginTime + duration {
+            currentIndex = timeIntervals.count - 1
+            currentLetterTimeOffsetRatio = 1
+        } else {
+            
+            let lineTimeOffset = currentTime - line.beginTime
+            var previousTimeOffset = 0.0
+
+            for (index, timeInterval) in timeIntervals.enumerated() {
+                
+                if lineTimeOffset > previousTimeOffset && lineTimeOffset <= previousTimeOffset + timeInterval {
+                    currentIndex = index
+                    currentLetterTimeOffsetRatio = (lineTimeOffset - previousTimeOffset) / timeInterval
+                    break
+                }
+                previousTimeOffset += timeInterval
             }
-            // TODO: 优化一下这里，预先算出duration
-            if index == timeIntervals.count - 1,
-                currentTime > timeOffset + timeInterval {
-                currentIndex = index
-                currentLetterTimeOffsetRatio = 1
-            }
-            timeOffset += timeInterval
         }
 
-        var layerWidth: CGFloat = 0.0
         // TODO: 优化一下这里的逻辑 有点乱
         if widths.count > currentIndex {
             let letterOffset = widths[currentIndex]
@@ -190,14 +214,10 @@ public class LyricsLabel: UIView {
             }
             layerWidth = (nextLetterOffset - letterOffset) * CGFloat(currentLetterTimeOffsetRatio) + letterOffset
         }
+        
         CATransaction.setDisableActions(true)
         sangLabelMask.bounds.size.width = layerWidth
-        if shouldPrint {
-            print(layerWidth)
-        }
     }
-    
-    var shouldPrint = true
 }
 
 // MARK: - Public Methods

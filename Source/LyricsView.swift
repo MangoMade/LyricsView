@@ -33,7 +33,7 @@ public class LyricsView: UIView {
             tableView.indexPathsForVisibleRows?.forEach({ (indexPath) in
                 if let lineModel = lyrics?.lines[indexPath.row],
                     let cell = tableView.cellForRow(at: indexPath) as? LyricsTableViewCell {
-                    cell.lyricsLabel.currentTime = max(time - lineModel.beginTime, 0)
+                    cell.lyricsLabel.currentTime = max(time, 0)
                 }
             })
         }
@@ -101,11 +101,9 @@ extension LyricsView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LyricsTableViewCell", for: indexPath) as! LyricsTableViewCell
         let lineModel = lyrics!.lines[indexPath.row]
-        cell.lyricsLabel.text = lineModel.text
         cell.lyricsLabel.font = font
-        cell.lyricsLabel.timeIntervals = lineModel.intervals
-        cell.lyricsLabel.currentTime = max(time - lineModel.beginTime, 0)
-        cell.lyricsLabel.shouldPrint = indexPath.row == 2
+        cell.lyricsLabel.line = lineModel
+        cell.lyricsLabel.currentTime = max(time, 0)
         return cell
     }
     

@@ -97,10 +97,10 @@
 			children = (
 				52DF76641F9B9097004216A7 /* KSCPaser */,
 				52E40EFF1F99F26A005DCD84 /* LyricsLabel.swift */,
-				52E40EFE1F99F1FE005DCD84 /* Supporting Files */,
 				52DF765A1F9B8CFE004216A7 /* LyricsView.swift */,
 				52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */,
 				52DF76651F9B9EF6004216A7 /* LyricsTableViewCell.swift */,
+				52E40EFE1F99F1FE005DCD84 /* Supporting Files */,
 			);
 			path = Source;
 			sourceTree = "<group>";
