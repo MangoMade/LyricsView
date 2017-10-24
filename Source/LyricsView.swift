@@ -53,6 +53,14 @@ public class LyricsView: UIView {
         }
     }
     
+    public var alignment = LyricsAlignment.center {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
+    public var displayUpdated: ((LyricsView) -> Void)?
+    
     private var currentLineIndex = -1 {
         willSet {
             
@@ -74,13 +82,9 @@ public class LyricsView: UIView {
         }
     }
     
-    public var alignment = LyricsAlignment.center {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-    
     private let tableView = UITableView(frame: .zero, style: .plain)
+    
+    private var displayLink: CADisplayLink?
     
     //MARK: Init / Deinit
     
@@ -96,7 +100,7 @@ public class LyricsView: UIView {
         tableView.register(LyricsTableViewCell.self, forCellReuseIdentifier: "LyricsTableViewCell")
         tableView.estimatedRowHeight = 0
         tableView.rowHeight          = lineHeight
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor    = .clear
 
         tableView.tableFooterView = UIView()
         tableView.showsVerticalScrollIndicator = false
@@ -144,6 +148,16 @@ public class LyricsView: UIView {
     public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         tableView.separatorStyle  = .none
+        if superview != nil {
+            displayLink = CADisplayLink(target: self, selector: #selector(update))
+            displayLink?.add(to: RunLoop.current, forMode: .commonModes)
+        } else {
+            displayLink?.invalidate()
+        }
+    }
+    
+    @objc func update() {
+        displayUpdated?(self)
     }
 }
 

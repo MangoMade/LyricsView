@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
     private let label = LyricsLabel()
     
-    private let lyricsView = LyricsView()
+    private var lyricsView: LyricsView? = LyricsView()
     private var player: AVAudioPlayer?
     private var updateLink: CADisplayLink?
     
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
                            attribute: .notAnAttribute,
                            multiplier: 1,
                            constant: 100).isActive = true
-        /*
+        
         let button = UIButton(type: .system)
         button.setTitle("start", for: .normal)
         button.addTarget(self, action: #selector(startAnimation), for: .touchUpInside)
@@ -81,13 +81,14 @@ class ViewController: UIViewController {
                            constant: 0).isActive = true
         
         NSLayoutConstraint(item: button,
-                           attribute: .centerY,
+                           attribute: .top,
                            relatedBy: .equal,
                            toItem: self.view,
-                           attribute: .centerY,
+                           attribute: .top,
                            multiplier: 1,
-                           constant: 100).isActive = true
-                  */
+                           constant: 150).isActive = true
+        
+        guard let lyricsView = self.lyricsView else { return }
         lyricsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(lyricsView)
         NSLayoutConstraint(item: lyricsView,
@@ -138,23 +139,21 @@ class ViewController: UIViewController {
             print("创建音频播放器失败:\(error)")
         }
 
-        updateLink = CADisplayLink(target: self, selector: #selector(update))
-        updateLink?.isPaused = true
-        updateLink?.add(to: RunLoop.current, forMode: .commonModes)
-        updateLink?.isPaused = false
+        lyricsView.displayUpdated = { [weak self] lyricsView in
+            lyricsView.time = self?.player?.currentTime ?? 0
+        }
+ 
         player?.prepareToPlay()
         player?.currentTime = 20
         player?.play()
 
     }
     
-    @objc func update() {
-        lyricsView.time = player?.currentTime ?? 0
-//        print(lyricsView.time)
-    }
 
     @objc func startAnimation() {
-        label.animate(intervals:[0.5, 0.25, 0.25, 0.5, 0.25, 0.25, 1, 0.5, ])
+//        label.animate(intervals:[0.5, 0.25, 0.25, 0.5, 0.25, 0.25, 1, 0.5, ])
+        lyricsView?.removeFromSuperview()
+        lyricsView = nil
     }
 }
 
