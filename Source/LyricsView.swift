@@ -8,6 +8,23 @@
 
 import UIKit
 
+public enum LyricsAlignment {
+    case center
+    case top
+    case bottom
+    
+    fileprivate var scrollPosition: UITableViewScrollPosition {
+        switch self {
+        case .center:
+            return .middle
+        case .top:
+            return .top
+        case .bottom:
+            return .bottom
+        }
+    }
+}
+
 public class LyricsView: UIView {
     
     public var lyrics: LyricsModelProtocol? {
@@ -28,6 +45,8 @@ public class LyricsView: UIView {
         }
     }
     
+    public var currentLineFont: UIFont = UIFont.systemFont(ofSize: 16)
+    
     public var time: TimeInterval = 0 {
         didSet {
             updateProgress()
@@ -36,11 +55,28 @@ public class LyricsView: UIView {
     
     private var currentLineIndex = -1 {
         willSet {
+            
+            let newCurrentLineIndexPath = IndexPath(row: newValue, section: 0)
             if !tableView.isDragging && !tableView.isTracking {
-                /// if currentLineIndex < 0, dont animate.
+                /// if currentLineIndex < 0, don't animate.
                 let animated = currentLineIndex >= 0
-                tableView.scrollToRow(at: IndexPath(row: newValue, section: 0), at: .middle, animated: animated)
+                tableView.scrollToRow(at: newCurrentLineIndexPath, at: alignment.scrollPosition, animated: animated)
             }
+            /// change the previous current line's font to normal font
+            let currentLineIndexPath = IndexPath(row: currentLineIndex, section: 0)
+            if let cell = tableView.cellForRow(at: currentLineIndexPath) as? LyricsTableViewCell {
+                cell.lyricsLabel.font = font
+            }
+            /// change the current line's font
+            if let cell = tableView.cellForRow(at: newCurrentLineIndexPath) as? LyricsTableViewCell {
+                cell.lyricsLabel.font = currentLineFont
+            }
+        }
+    }
+    
+    public var alignment = LyricsAlignment.center {
+        didSet {
+            setNeedsLayout()
         }
     }
     
@@ -94,7 +130,15 @@ public class LyricsView: UIView {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        tableView.contentInset = UIEdgeInsets(top: (bounds.height - lineHeight) / 2, left: 0, bottom: (bounds.height - lineHeight) / 2, right: 0)
+        let inset = (bounds.height - lineHeight) / 2
+        switch alignment {
+        case .center:
+            tableView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
+        case .top:
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inset * 2, right: 0)
+        case .bottom:
+            tableView.contentInset = UIEdgeInsets(top: inset * 2, left: 0, bottom: 0, right: 0)
+        }
     }
     
     public override func didMoveToSuperview() {
@@ -162,7 +206,7 @@ extension LyricsView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LyricsTableViewCell", for: indexPath) as! LyricsTableViewCell
         let lineModel = lyrics!.lines[indexPath.row]
-        cell.lyricsLabel.font = font
+        cell.lyricsLabel.font = indexPath.row == currentLineIndex ? currentLineFont : font
         cell.lyricsLabel.line = lineModel
         cell.lyricsLabel.currentTime = max(time, 0)
         return cell

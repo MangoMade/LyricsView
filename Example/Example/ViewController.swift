@@ -120,7 +120,7 @@ class ViewController: UIViewController {
                            toItem: nil,
                            attribute: .notAnAttribute,
                            multiplier: 1,
-                           constant: 300).isActive = true
+                           constant: 80).isActive = true
 
         let fileName = "BeautifulLove.ksc"
         guard let lrcFilePath = Bundle.main.path(forResource: fileName, ofType: nil)  else { return }
@@ -129,7 +129,7 @@ class ViewController: UIViewController {
         lyricsView.lyrics = model
         lyricsView.layer.borderColor = UIColor.black.cgColor
         lyricsView.layer.borderWidth = 1
-        
+        lyricsView.alignment = .top
         guard let musicPath = Bundle.main.url(forResource: "BeautifulLove.mp3" , withExtension: nil)  else { return }
 
         do {
