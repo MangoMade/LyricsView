@@ -13,8 +13,12 @@ class LyricsTableViewCell: UITableViewCell {
     let lyricsLabel = LyricsLabel()
     
     private func commonInit() {
+        selectionStyle = .none
         
-        contentView.backgroundColor = .clear
+        contentView.backgroundColor = UIColor.clear
+        
+        backgroundColor = UIColor.clear
+        
         lyricsLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(lyricsLabel)
         let centerEdges: [NSLayoutAttribute] = [.centerY, .centerX]

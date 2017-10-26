@@ -100,7 +100,7 @@ public class LyricsView: UIView {
         }
     }
     
-    fileprivate let tableView = UITableView(frame: .zero, style: .plain)
+    fileprivate let tableView = UITableView(frame: .zero, style: .grouped)
     
     private var displayLink: CADisplayLink?
     
@@ -118,8 +118,7 @@ public class LyricsView: UIView {
         tableView.register(LyricsTableViewCell.self, forCellReuseIdentifier: "LyricsTableViewCell")
         tableView.estimatedRowHeight = 0
         tableView.rowHeight          = lineHeight
-        tableView.backgroundColor    = .clear
-
+        
         tableView.tableFooterView = UIView()
         tableView.showsVerticalScrollIndicator = false
         if #available(iOS 11.0, *) {
@@ -166,6 +165,8 @@ public class LyricsView: UIView {
     public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         tableView.separatorStyle  = .none
+        tableView.backgroundColor    = .clear
+        
         if superview != nil {
             displayLink = CADisplayLink(target: self, selector: #selector(update))
             displayLink?.add(to: RunLoop.current, forMode: .commonModes)
@@ -251,6 +252,7 @@ extension LyricsView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
     }
+
 }
 
 extension LyricsView: UITableViewDelegate {
