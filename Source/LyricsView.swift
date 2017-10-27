@@ -75,6 +75,19 @@ public class LyricsView: UIView {
         }
     }
     
+    public var shouldHideMask: Bool {
+        get {
+            return layer.mask != maskLayer
+        }
+        set {
+            if newValue {
+                layer.mask = nil
+            } else {
+                layer.mask = maskLayer
+            }
+        }
+    }
+    
     fileprivate var currentLineIndex = -1 {
         willSet {
             
@@ -103,6 +116,7 @@ public class LyricsView: UIView {
     fileprivate let tableView = UITableView(frame: .zero, style: .grouped)
     
     private var displayLink: CADisplayLink?
+    private let maskLayer = CAGradientLayer()
     
     //MARK: Init / Deinit
     
@@ -137,6 +151,15 @@ public class LyricsView: UIView {
                                constant: 0).isActive = true
         }
         
+        maskLayer.colors = [
+            UIColor.clear.cgColor,
+            UIColor.white.cgColor,
+            UIColor.white.cgColor,
+            UIColor.clear.cgColor,
+        ]
+        maskLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        maskLayer.endPoint   = CGPoint(x: 0.5, y: 1)
+        layer.mask = maskLayer
     }
     
     override init(frame: CGRect) {
@@ -160,6 +183,7 @@ public class LyricsView: UIView {
         case .bottom:
             tableView.contentInset = UIEdgeInsets(top: inset * 2, left: 0, bottom: 0, right: 0)
         }
+        maskLayer.frame = bounds
     }
     
     public override func didMoveToSuperview() {
@@ -177,6 +201,14 @@ public class LyricsView: UIView {
     
     @objc func update() {
         displayUpdated?(self)
+    }
+    
+    func resumeUpdate() {
+        displayLink?.isPaused = false
+    }
+    
+    func pauseUpdate() {
+        displayLink?.isPaused = true
     }
 }
 
@@ -200,7 +232,7 @@ extension LyricsView {
         }
         
         /// find out index of current line
-        var lineIndex = 0
+        var lineIndex = -1
         if currentLineIndex >= 0 && isCurrentLine(lineIndex: currentLineIndex) {
             lineIndex = currentLineIndex
         } else {
