@@ -148,12 +148,11 @@ class ViewController: UIViewController {
         player?.prepareToPlay()
         player?.currentTime = 20
         player?.play()
+
     }
     
     @objc func startAnimation() {
-//        label.animate(intervals:[0.5, 0.25, 0.25, 0.5, 0.25, 0.25, 1, 0.5, ])
-        lyricsView?.removeFromSuperview()
-        lyricsView = nil
+ 
     }
 }
 

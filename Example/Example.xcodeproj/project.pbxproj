@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5291B73C1FC67BB30040EF42 /* BeautifulLove.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 5291B73B1FC67BB30040EF42 /* BeautifulLove.lrc */; };
 		52B581751F9DEF81001A2B57 /* BeautifulLove.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52B581731F9DEF81001A2B57 /* BeautifulLove.mp3 */; };
 		52B5817E1F9DF2D5001A2B57 /* LyricsView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40EFB1F99F023005DCD84 /* LyricsView.framework */; };
 		52B5817F1F9DF2D5001A2B57 /* LyricsView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40EFB1F99F023005DCD84 /* LyricsView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -36,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5291B73B1FC67BB30040EF42 /* BeautifulLove.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BeautifulLove.lrc; sourceTree = "<group>"; };
 		52B581731F9DEF81001A2B57 /* BeautifulLove.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BeautifulLove.mp3; sourceTree = "<group>"; };
 		52B581811F9DF552001A2B57 /* 丁香花.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "丁香花.mp3"; sourceTree = "<group>"; };
 		52B581871F9DF77B001A2B57 /* BeautifulLove.ksc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BeautifulLove.ksc; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				52E91C861F9D8E7800EC1D49 /* test2.ksc */,
 				52B581731F9DEF81001A2B57 /* BeautifulLove.mp3 */,
 				52B581871F9DF77B001A2B57 /* BeautifulLove.ksc */,
+				5291B73B1FC67BB30040EF42 /* BeautifulLove.lrc */,
 				52B581811F9DF552001A2B57 /* 丁香花.mp3 */,
 				52E40EEB1F99EF5A005DCD84 /* Main.storyboard */,
 				52E40EEE1F99EF5A005DCD84 /* Assets.xcassets */,
@@ -169,6 +172,7 @@
 				52B581821F9DF552001A2B57 /* 丁香花.mp3 in Resources */,
 				52E40EF21F99EF5A005DCD84 /* LaunchScreen.storyboard in Resources */,
 				52E40EEF1F99EF5A005DCD84 /* Assets.xcassets in Resources */,
+				5291B73C1FC67BB30040EF42 /* BeautifulLove.lrc in Resources */,
 				52E91C881F9D8E7800EC1D49 /* test2.ksc in Resources */,
 				52B581751F9DEF81001A2B57 /* BeautifulLove.mp3 in Resources */,
 				52B581881F9DF77B001A2B57 /* BeautifulLove.ksc in Resources */,

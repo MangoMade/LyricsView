@@ -95,7 +95,11 @@ public class LyricsView: UIView {
             if !tableView.isDragging && !tableView.isTracking {
                 /// if currentLineIndex < 0, don't animate.
                 let animated = currentLineIndex >= 0
-                tableView.scrollToRow(at: newCurrentLineIndexPath, at: alignment.scrollPosition, animated: animated)
+                if newValue >= 0 {
+                    tableView.scrollToRow(at: newCurrentLineIndexPath, at: alignment.scrollPosition, animated: animated)
+                } else {
+                    tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: alignment.scrollPosition, animated: animated)
+                }
             }
             /// change the previous current line's font to normal font
             let currentLineIndexPath = IndexPath(row: currentLineIndex, section: 0)

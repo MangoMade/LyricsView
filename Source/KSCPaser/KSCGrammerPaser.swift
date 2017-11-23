@@ -37,7 +37,7 @@ struct KSCGrammerPaser {
             case 2:
                 model.endTime   = stringToTimeInterval(substring)
             case 3:
-                model.characters = paser(text: substring)
+                model.characters = paserText(substring)
             case 4:
                 model.intervals = substring.split(separator: ",").flatMap { (Double($0) ?? 0) / 1000 }
             default:
@@ -47,7 +47,7 @@ struct KSCGrammerPaser {
         return model
     }
     
-    private static func paser(text: String) -> [String] {
+    private static func paserText(_ text: String) -> [String] {
         let pattern = "\\[(.*?)\\]|(.{1})"
         var charaters: [String] = []
         let regExp = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)

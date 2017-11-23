@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5291B73F1FC6CD1A0040EF42 /* LRCPaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5291B73E1FC6CD1A0040EF42 /* LRCPaser.swift */; };
 		52DF765B1F9B8CFE004216A7 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765A1F9B8CFE004216A7 /* LyricsView.swift */; };
 		52DF76601F9B908E004216A7 /* LyricsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */; };
 		52DF76611F9B908E004216A7 /* KSCGrammerPaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765D1F9B908E004216A7 /* KSCGrammerPaser.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5291B73E1FC6CD1A0040EF42 /* LRCPaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRCPaser.swift; sourceTree = "<group>"; };
 		52DF765A1F9B8CFE004216A7 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
 		52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsProtocol.swift; sourceTree = "<group>"; };
 		52DF765D1F9B908E004216A7 /* KSCGrammerPaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSCGrammerPaser.swift; sourceTree = "<group>"; };
@@ -64,6 +66,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5291B73D1FC6CCE70040EF42 /* LRCPaser */ = {
+			isa = PBXGroup;
+			children = (
+				5291B73E1FC6CD1A0040EF42 /* LRCPaser.swift */,
+			);
+			path = LRCPaser;
+			sourceTree = "<group>";
+		};
 		52DF76641F9B9097004216A7 /* KSCPaser */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +105,7 @@
 		52E40EC31F99EF25005DCD84 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				5291B73D1FC6CCE70040EF42 /* LRCPaser */,
 				52DF76641F9B9097004216A7 /* KSCPaser */,
 				52E40EFF1F99F26A005DCD84 /* LyricsLabel.swift */,
 				52DF765A1F9B8CFE004216A7 /* LyricsView.swift */,
@@ -239,6 +250,7 @@
 				52DF76631F9B908E004216A7 /* KSCModel.swift in Sources */,
 				52DF765B1F9B8CFE004216A7 /* LyricsView.swift in Sources */,
 				52DF76661F9B9EF6004216A7 /* LyricsTableViewCell.swift in Sources */,
+				5291B73F1FC6CD1A0040EF42 /* LRCPaser.swift in Sources */,
 				52E40F001F99F26A005DCD84 /* LyricsLabel.swift in Sources */,
 				52DF76601F9B908E004216A7 /* LyricsProtocol.swift in Sources */,
 			);
