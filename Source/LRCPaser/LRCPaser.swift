@@ -8,11 +8,11 @@
 
 import UIKit
 
-class LRCPaser {
+class LRCPaser: PaserProtocol {
     
-    private var content: String
+    public var content: String
     
-    public init(with content: String) {
+    public required init(with content: String) {
         self.content = content
     }
     
@@ -20,26 +20,56 @@ class LRCPaser {
         let lineContents = content.components(separatedBy: "\n")
         let models = LyricsModel()
         for line in lineContents {
-            if let lineModel = KSCGrammerPaser.paser(line: line) {
-                models.lines.append(lineModel)
+            if let lineModels = paserLine(line) {
+                models.lines.append(contentsOf: lineModels)
             }
+        }
+        models.lines.sort { (model1, model2) -> Bool in
+            return model1.beginTime < model2.beginTime
         }
         return models
     }
     
-    
-    private func paserLine(_ text: String) -> (times: [TimeInterval], lyrics: String)? {
+    private func paserLine(_ text: String) -> [LyricsLineModelProtocol]? {
         
         let pattern =  "^(\\[.*\\])(.*)$"
         let regExp = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-        guard let result = regExp?.matches(in: text, options: [], range: NSMakeRange(0, text.utf16.count)) else {
+        guard let result = regExp?.matches(in: text, options: [], range: NSMakeRange(0, text.utf16.count)).first else {
             return nil
         }
         
-        if result.count > 0 {
-            
-        }
+        let timesRange   = result.range(at: 1)
+        let timesString  = (text as NSString).substring(with: timesRange)
+        let lyricsRange  = result.range(at: 2)
+        let lyricsString = (text as NSString).substring(with: lyricsRange)
         
-        return ([], "")
+        if let times = paserTimes(timesString) {
+            var lines: [LRCLineModel] = []
+            times.forEach({ (time) in
+                var model = LRCLineModel()
+                model.beginTime = time
+                model.text = lyricsString
+                lines.append(model)
+            })
+            return lines
+        } else {
+            return nil
+        }
     }
+    
+    private func paserTimes(_ timesString: String) -> [TimeInterval]? {
+        let pattern = "\\[(.*?)\\]"
+        let regExp = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        guard let results = regExp?.matches(in: timesString, options: [], range: NSMakeRange(0, timesString.utf16.count)) else {
+            return nil
+        }
+        var times: [TimeInterval] = []
+        results.forEach { result in
+            let timeRange    = result.range(at: 1)
+            let timeString   = (timesString as NSString).substring(with: timeRange)
+            times.append(stringToTimeInterval(timeString))
+        }
+        return times
+    }
+    
 }

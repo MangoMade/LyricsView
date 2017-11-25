@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5291B73F1FC6CD1A0040EF42 /* LRCPaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5291B73E1FC6CD1A0040EF42 /* LRCPaser.swift */; };
+		5291B7411FC7D0C60040EF42 /* LRCPaserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5291B7401FC7D0C60040EF42 /* LRCPaserTests.swift */; };
+		5291B7461FC7FEC40040EF42 /* PaserBaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5291B7451FC7FEC40040EF42 /* PaserBaseTestCase.swift */; };
+		5291B7481FC813920040EF42 /* PaserProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5291B7471FC813920040EF42 /* PaserProtocol.swift */; };
+		5291B74A1FC817EE0040EF42 /* LRCLineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5291B7491FC817EE0040EF42 /* LRCLineModel.swift */; };
 		52DF765B1F9B8CFE004216A7 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765A1F9B8CFE004216A7 /* LyricsView.swift */; };
 		52DF76601F9B908E004216A7 /* LyricsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */; };
 		52DF76611F9B908E004216A7 /* KSCGrammerPaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF765D1F9B908E004216A7 /* KSCGrammerPaser.swift */; };
@@ -32,6 +36,10 @@
 
 /* Begin PBXFileReference section */
 		5291B73E1FC6CD1A0040EF42 /* LRCPaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRCPaser.swift; sourceTree = "<group>"; };
+		5291B7401FC7D0C60040EF42 /* LRCPaserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRCPaserTests.swift; sourceTree = "<group>"; };
+		5291B7451FC7FEC40040EF42 /* PaserBaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaserBaseTestCase.swift; sourceTree = "<group>"; };
+		5291B7471FC813920040EF42 /* PaserProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaserProtocol.swift; sourceTree = "<group>"; };
+		5291B7491FC817EE0040EF42 /* LRCLineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRCLineModel.swift; sourceTree = "<group>"; };
 		52DF765A1F9B8CFE004216A7 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
 		52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsProtocol.swift; sourceTree = "<group>"; };
 		52DF765D1F9B908E004216A7 /* KSCGrammerPaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KSCGrammerPaser.swift; sourceTree = "<group>"; };
@@ -70,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				5291B73E1FC6CD1A0040EF42 /* LRCPaser.swift */,
+				5291B7491FC817EE0040EF42 /* LRCLineModel.swift */,
 			);
 			path = LRCPaser;
 			sourceTree = "<group>";
@@ -111,6 +120,7 @@
 				52DF765A1F9B8CFE004216A7 /* LyricsView.swift */,
 				52DF765C1F9B908E004216A7 /* LyricsProtocol.swift */,
 				52DF76651F9B9EF6004216A7 /* LyricsTableViewCell.swift */,
+				5291B7471FC813920040EF42 /* PaserProtocol.swift */,
 				52E40EFE1F99F1FE005DCD84 /* Supporting Files */,
 			);
 			path = Source;
@@ -120,6 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				52E40ECF1F99EF25005DCD84 /* LyricsViewTests.swift */,
+				5291B7401FC7D0C60040EF42 /* LRCPaserTests.swift */,
+				5291B7451FC7FEC40040EF42 /* PaserBaseTestCase.swift */,
 				52E40ED11F99EF25005DCD84 /* Info.plist */,
 			);
 			path = LyricsViewTests;
@@ -246,7 +258,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				52DF76611F9B908E004216A7 /* KSCGrammerPaser.swift in Sources */,
+				5291B74A1FC817EE0040EF42 /* LRCLineModel.swift in Sources */,
 				52DF76621F9B908E004216A7 /* KSCPaser.swift in Sources */,
+				5291B7481FC813920040EF42 /* PaserProtocol.swift in Sources */,
 				52DF76631F9B908E004216A7 /* KSCModel.swift in Sources */,
 				52DF765B1F9B8CFE004216A7 /* LyricsView.swift in Sources */,
 				52DF76661F9B9EF6004216A7 /* LyricsTableViewCell.swift in Sources */,
@@ -261,6 +275,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				52E40ED01F99EF25005DCD84 /* LyricsViewTests.swift in Sources */,
+				5291B7411FC7D0C60040EF42 /* LRCPaserTests.swift in Sources */,
+				5291B7461FC7FEC40040EF42 /* PaserBaseTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
