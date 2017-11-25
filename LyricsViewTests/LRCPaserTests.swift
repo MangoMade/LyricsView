@@ -27,9 +27,9 @@ class LRCPaserTests: PaserBaseTestCase {
         let line1  = model.lines[0]
         let line2 = model.lines[2]
 
-        XCTAssert(line1.beginTime.isEqualByTwoDecimal(to: 0.86))
+        XCTAssert(line1.beginTime.isEqualByThreeDecimal(to: 0.86))
         XCTAssert(line1.text == "Beautiful Love")
-        XCTAssert(line2.beginTime.isEqualByTwoDecimal(to: 82.06))
+        XCTAssert(line2.beginTime.isEqualByThreeDecimal(to: 82.06))
         XCTAssert(line2.text == "so beautiful")
     }
     
@@ -39,9 +39,9 @@ class LRCPaserTests: PaserBaseTestCase {
         let line2 = model.lines[3]
         let text = "love is beautiful"
         
-        XCTAssert(line1.beginTime.isEqualByTwoDecimal(to: 78.77))
+        XCTAssert(line1.beginTime.isEqualByThreeDecimal(to: 78.77))
         XCTAssert(line1.text == text)
-        XCTAssert(line2.beginTime.isEqualByTwoDecimal(to: 105.49))
+        XCTAssert(line2.beginTime.isEqualByThreeDecimal(to: 105.49))
         XCTAssert(line2.text == text)
     }
     

@@ -15,7 +15,7 @@ class PaserBaseTestCase: XCTestCase {
 
 extension Double {
     
-    func isEqualByTwoDecimal(to other: Double) -> Bool {
-        return abs(self - other) < 0.01
+    func isEqualByThreeDecimal(to other: Double) -> Bool {
+        return abs(self - other) < 0.001
     }
 }

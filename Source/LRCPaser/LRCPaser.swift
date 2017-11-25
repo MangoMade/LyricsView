@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LRCPaser: PaserProtocol {
+public class LRCPaser: PaserProtocol {
     
     public var content: String
     
