@@ -10,7 +10,6 @@ import XCTest
 
 class PaserBaseTestCase: XCTestCase {
     
-
 }
 
 extension Double {

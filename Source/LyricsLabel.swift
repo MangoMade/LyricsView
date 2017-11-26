@@ -80,6 +80,7 @@ public class LyricsLabel: UIView {
     }
     
     fileprivate let sangLabelMask = CALayer()
+    fileprivate let backgroundLabelMask = CALayer()
     
     private var widths: [CGFloat] = []
     
@@ -97,9 +98,16 @@ public class LyricsLabel: UIView {
         
         sangLabel.textColor = sangTextColor
         backgroundLabel.textColor = backgroundTextColor
+        
         sangLabelMask.anchorPoint = CGPoint(x: 0, y: 0.5)
         sangLabelMask.backgroundColor = UIColor.white.cgColor
         sangLabel.layer.mask = sangLabelMask
+        
+        
+        backgroundLabelMask.anchorPoint = CGPoint(x: 1, y: 0.5)
+        backgroundLabelMask.backgroundColor = UIColor.white.cgColor
+        backgroundLabel.layer.mask = backgroundLabelMask
+ 
     }
     
     override init(frame: CGRect) {
@@ -118,9 +126,13 @@ public class LyricsLabel: UIView {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        sangLabelMask.bounds.size.height = bounds.height
         
+        sangLabelMask.bounds.size.height = bounds.height
         sangLabelMask.position = CGPoint(x: 0, y: bounds.height / 2)
+        
+        backgroundLabelMask.bounds.size = bounds.size
+        backgroundLabelMask.position = CGPoint(x: bounds.width, y: bounds.height / 2)
+        
         labels.forEach{ $0.frame = bounds }
     }
     
@@ -128,6 +140,12 @@ public class LyricsLabel: UIView {
         
         /// only calculate widths when cell is current line
         guard isCurrentLine, let line = self.line else { return [] }
+        
+        guard line.intervals.count != 0,
+            line.intervals.count == line.characters.count else {
+            return []
+        }
+        
         var widths = [CGFloat]()
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -177,7 +195,14 @@ public class LyricsLabel: UIView {
         
         guard isCurrentLine, let line = self.line else {
             // if this view is not current playing line
-            sangLabelMask.bounds.size.width = 0
+            updateMaskWidth(0)
+            return
+        }
+        
+        guard line.intervals.count != 0,
+            line.intervals.count == line.characters.count else {
+            
+            updateMaskWidth(bounds.width)
             return
         }
         
@@ -216,8 +241,13 @@ public class LyricsLabel: UIView {
             layerWidth = (nextLetterOffset - letterOffset) * CGFloat(currentLetterTimeOffsetRatio) + letterOffset
         }
         
+        updateMaskWidth(layerWidth)
+    }
+    
+    private func updateMaskWidth(_ width: CGFloat) {
         CATransaction.setDisableActions(true)
-        sangLabelMask.bounds.size.width = layerWidth
+        sangLabelMask.bounds.size.width = width
+        backgroundLabelMask.bounds.size.width = bounds.width - width
     }
 }
 
