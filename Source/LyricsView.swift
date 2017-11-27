@@ -207,11 +207,11 @@ public class LyricsView: UIView {
         displayUpdated?(self)
     }
     
-    func resumeUpdate() {
+    open func resumeUpdate() {
         displayLink?.isPaused = false
     }
     
-    func pauseUpdate() {
+    open func pauseUpdate() {
         displayLink?.isPaused = true
     }
 }
@@ -288,7 +288,6 @@ extension LyricsView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
     }
-
 }
 
 extension LyricsView: UITableViewDelegate {
